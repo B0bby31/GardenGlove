@@ -5,17 +5,15 @@
 
 #include "webserver.h"
 
-#include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
+#include <WiFi.h>
 #include <DNSServer.h>
 #include <ArduinoOTA.h>
-#include <ESPAsyncTCP.h>
+#include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
 #include "config.h"
 #include "debug.h"
 #include "cli.h"
-#include "spiffs.h"
 #include "settings.h"
 
 #include "webfiles.h"
@@ -149,7 +147,6 @@ namespace webserver {
         }, [](AsyncWebServerRequest* request, String filename, size_t index, uint8_t* data, size_t len, bool final) {
             if (!index) {
                 debugf("Update Start: %s\n", filename.c_str());
-                Update.runAsync(true);
                 if (!Update.begin((ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000)) {
                     Update.printError(Serial);
                 }
@@ -167,8 +164,6 @@ namespace webserver {
                 }
             }
         });
-
-        MDNS.addService("http", "tcp", 80);
 
         dnsServer.start(53, URL, IPAddress(192, 168, 4, 1));
 

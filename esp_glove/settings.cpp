@@ -5,7 +5,6 @@
 
 #include "settings.h"
 
-#include "spiffs.h"
 #include "debug.h"
 #include "config.h"
 #include "eeprom.h"
