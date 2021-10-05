@@ -15,17 +15,13 @@ void setup() {
 
     delay(200);
 
-    settings::begin();
+    settings::begin(false);
     cli::begin();
     webserver::begin();
 
-    debug("\n[~~~ WiFi Duck v");
+    debug("\n[~~~ Glove v");
     debug(VERSION);
     debugln(" Started! ~~~]");
-    debugln("    __");
-    debugln("___( o)>");
-    debugln("\\ <_. )");
-    debugln(" `---'   hjw\n");
 
 }
 

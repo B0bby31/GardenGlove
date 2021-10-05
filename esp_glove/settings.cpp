@@ -2,48 +2,44 @@
    This software is licensed under the MIT License. See the license file for details.
    Source: https://github.com/spacehuhntech/WiFiDuck
  */
-
+ 
+#include <Preferences.h>
 #include "settings.h"
 
 #include "debug.h"
 #include "config.h"
-#include "eeprom.h"
 
-#define SETTINGS_ADDRES 1
-#define SETTINGS_MAGIC_NUM 1234567891
+Preferences preferences;
 
 namespace settings {
     // ===== PRIVATE ===== //
-    typedef struct settings_t {
-        uint32_t magic_num;
-
-        char ssid[33];
-        char password[65];
-        char channel[5];
-        char autorun[65];
-    } settings_t;
-
-    settings_t data;
-
+    String ssid_ap;
+    String password_ap;
+    String channel;
+    String ssid_sta;
+    String password_sta;
+    
     // ===== PUBLIC ====== //
-    void begin() {
-        eeprom::begin();
+    void begin(bool mode) {
+        preferences.begin("Settings", mode);
         load();
     }
 
     void load() {
-        eeprom::getObject(SETTINGS_ADDRES, data);
-        if (data.magic_num != SETTINGS_MAGIC_NUM) reset();
-
-        if (data.ssid[32] != 0) setSSID(WIFI_SSID);
-        if (data.password[64] != 0) setPassword(WIFI_PASSWORD);
-        if (data.channel[4] != 0) setChannel(WIFI_CHANNEL);
-        if (data.autorun[64] != 0) setAutorun("");
+      ssid_ap = preferences.getString("SSID_AP", WIFI_SSID); 
+      password_ap = preferences.getString("Password_AP", WIFI_PASSWORD);
+      ssid_sta = preferences.getString("SSID_STA", NETWORK_SSID); 
+      password_sta = preferences.getString("Password_STA", NETWORK_PASSWORD);
+      channel = preferences.getString("Channel", WIFI_CHANNEL);
     }
 
+    void end() {
+      preferences.end();
+    }
+
+    // resets settings to default
     void reset() {
         debugln("Resetting Settings");
-        data.magic_num = SETTINGS_MAGIC_NUM;
         setSSID(WIFI_SSID);
         setPassword(WIFI_PASSWORD);
         setChannel(WIFI_CHANNEL);
@@ -51,7 +47,11 @@ namespace settings {
 
     void save() {
         debugln("Saving Settings");
-        eeprom::saveObject(SETTINGS_ADDRES, data);
+
+
+        preferences.putString("SSID_STA", ssid_sta);
+        preferences.putString("Password_STA", password_sta);
+
     }
 
     String toString() {
@@ -66,32 +66,25 @@ namespace settings {
         s += "channel=";
         s += getChannel();
         s += "\n";
-        s += "autorun=";
-        s += getAutorun();
-        s += "\n";
 
         return s;
     }
 
     const char* getSSID() {
-        return data.ssid;
+        return ssid_ap.c_str();
     }
 
     const char* getPassword() {
-        return data.password;
+        return password_ap.c_str();
     }
 
     const char* getChannel() {
-        return data.channel;
+        return channel.c_str();
     }
 
     int getChannelNum() {
-        if (strcmp(data.channel, "auto") != 0) return atoi(data.channel);
+        if (strcmp(channel.c_str(), "auto") != 0) return atoi(channel.c_str());
         return 1;
-    }
-
-    const char* getAutorun() {
-        return data.autorun;
     }
 
     void set(const char* name, const char* value) {
@@ -101,44 +94,28 @@ namespace settings {
             setPassword(value);
         } else if (strcmp(name, "channel") == 0) {
             setChannel(value);
-        } else if (strcmp(name, "autorun") == 0) {
-            setAutorun(value);
         }
     }
 
     void setSSID(const char* ssid) {
-        if (ssid) {
-            memset(data.ssid, 0, 33);
-            strncpy(data.ssid, ssid, 32);
-
-            save();
+        if (ssid && (strlen(ssid) <= 33)) {
+            ssid_ap = ssid;
+            preferences.putString("SSID_AP", ssid_ap);
         }
     }
 
     void setPassword(const char* password) {
-        if (password && (strlen(password) >= 8)) {
-            memset(data.password, 0, 65);
-            strncpy(data.password, password, 64);
-
-            save();
+        if (password && (strlen(password) >= 8) && (strlen(password) <= 65)) {
+            password_ap = password;
+            preferences.putString("Password_AP", password_ap);
         }
     }
 
-    void setChannel(const char* channel) {
-        if (channel && ((strcmp(channel, "auto") == 0) || ((atoi(channel) >= 1) && (atoi(channel) <= 13)))) {
-            memset(data.channel, 0, 5);
-            strncpy(data.channel, channel, 4);
-
-            save();
+    void setChannel(const char* channels) {
+        if (channels && ((strcmp(channels, "auto") == 0) || ((atoi(channels) >= 1) && (atoi(channels) <= 13))) && (strlen(channels) <= 5)) {
+            channel = channels;
+            preferences.putString("Channel", channel);
         }
     }
 
-    void setAutorun(const char* autorun) {
-        if (autorun) {
-            memset(data.autorun, 0, 65);
-            strncpy(data.autorun, autorun, 64);
-
-            save();
-        }
-    }
 }

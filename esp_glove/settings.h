@@ -8,18 +8,17 @@
 #include <Arduino.h> // String
 
 namespace settings {
-    void begin();
+    void begin(bool mode);
     void load();
+    void end();
 
     void reset();
-    void save();
 
     String toString();
 
     const char* getSSID();
     const char* getPassword();
     const char* getChannel();
-    const char* getAutorun();
 
     int getChannelNum();
 
@@ -28,5 +27,4 @@ namespace settings {
     void setSSID(const char* ssid);
     void setPassword(const char* password);
     void setChannel(const char* channel);
-    void setAutorun(const char* autorun);
 }

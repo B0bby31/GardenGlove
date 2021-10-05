@@ -17,13 +17,18 @@
 #define EEPROM_BOOT_ADDR  3210
 #define BOOT_MAGIC_NUM    1234567890
 
-/*! ===== WiFi Settings ===== */
+/*! ===== WiFi AP-MODE Settings ===== */
 #define WIFI_SSID "Glove"
 #define WIFI_PASSWORD "glove123"
 #define WIFI_CHANNEL "1"
 
 #define HOSTNAME "Glove"
 #define URL "glove.local"
+
+/*! ===== WiFi STA-MODE Settings ===== */
+#define NETWORK_SSID ""
+#define NETWORK_PASSWORD ""
+
 
 #if !defined(ESP32)
 #error You are compiling for the wrong board, mate! Select something with an ESP32.
