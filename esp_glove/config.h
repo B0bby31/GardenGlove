@@ -12,11 +12,6 @@
 #define DEBUG_PORT Serial
 #define DEBUG_BAUD 115200
 
-/*! ======EEPROM Settings ===== */
-#define EEPROM_SIZE       4095
-#define EEPROM_BOOT_ADDR  3210
-#define BOOT_MAGIC_NUM    1234567890
-
 /*! ===== WiFi AP-MODE Settings ===== */
 #define WIFI_SSID "Glove"
 #define WIFI_PASSWORD "glove123"
@@ -32,4 +27,4 @@
 
 #if !defined(ESP32)
 #error You are compiling for the wrong board, mate! Select something with an ESP32.
-#endif /* ifdef DUCKMCU && DUCKMCU!="ATMEGA32U4" */
+#endif
