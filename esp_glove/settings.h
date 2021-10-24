@@ -16,15 +16,17 @@ namespace settings {
 
     String toString();
 
-    const char* getSSID();
-    const char* getPassword();
+    const char* getSSID(bool choice);
+    const char* getPassword(bool choice);
     const char* getChannel();
+    int getTemperature();
 
     int getChannelNum();
 
     void set(const char* name, const char* value);
 
-    void setSSID(const char* ssid);
-    void setPassword(const char* password);
+    void setSSID(const char* ssid, bool choice);
+    void setPassword(const char* password, bool choice);
     void setChannel(const char* channel);
+    void setTemperature(int temperature);
 }

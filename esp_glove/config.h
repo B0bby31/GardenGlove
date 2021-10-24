@@ -9,6 +9,7 @@
 
 /*! ===== DEBUG Settings ===== */
 #define ENABLE_DEBUG
+#define DEBUG_LED 2
 #define DEBUG_PORT Serial
 #define DEBUG_BAUD 115200
 
@@ -24,6 +25,24 @@
 #define NETWORK_SSID ""
 #define NETWORK_PASSWORD ""
 
+/*! ===== Temperature Settings ===== */
+#define TARGET_TEMP 25
+#define APIKEY 
+#define TEMP1PIN 
+#define TEMP2PIN
+
+/*! ===== LED Settings ===== */
+
+
+/*! ===== Button Settings ===== */
+#define BUTTON1PIN 18
+#define BUTTON2PIN 23
+
+/*! ===== Battery Settings ===== */
+#define CELLONE 34
+#define CELLTWO 33
+#define MINVOLTAGE 2.7
+#define MAXVOLTAGE 3.65
 
 #if !defined(ESP32)
 #error You are compiling for the wrong board, mate! Select something with an ESP32.

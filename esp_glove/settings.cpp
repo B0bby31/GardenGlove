@@ -8,6 +8,7 @@
 
 #include "debug.h"
 #include "config.h"
+#include "battery.h"
 
 Preferences preferences;
 
@@ -18,6 +19,7 @@ namespace settings {
     String channel;
     String ssid_sta;
     String password_sta;
+    int targetTemp;
     
     // ===== PUBLIC ====== //
     void begin(bool mode) {
@@ -31,6 +33,7 @@ namespace settings {
       ssid_sta = preferences.getString("SSID_STA", NETWORK_SSID); 
       password_sta = preferences.getString("Password_STA", NETWORK_PASSWORD);
       channel = preferences.getString("Channel", WIFI_CHANNEL);
+      targetTemp = preferences.getInt("Temperature", TARGET_TEMP);
     }
 
     void end() {
@@ -40,9 +43,12 @@ namespace settings {
     // resets settings to default
     void reset() {
         debugln("Resetting Settings");
-        setSSID(WIFI_SSID);
-        setPassword(WIFI_PASSWORD);
+        setSSID(WIFI_SSID, false);
+        setPassword(WIFI_PASSWORD, false);
+        setSSID(NETWORK_SSID, true);
+        setPassword(NETWORK_PASSWORD, true);        
         setChannel(WIFI_CHANNEL);
+        setTemperature(TARGET_TEMP);
     }
 
     void save() {
@@ -54,27 +60,37 @@ namespace settings {
 
     }
 
+    // cli output
     String toString() {
         String s;
 
         s += "ssid=";
-        s += getSSID();
+        s += getSSID(true);
         s += "\n";
         s += "password=";
-        s += getPassword();
+        s += getPassword(true);
         s += "\n";
         s += "channel=";
         s += getChannel();
+        s += "\n";
+        s += "Temperature=";
+        s += getTemperature();
         s += "\n";
 
         return s;
     }
 
-    const char* getSSID() {
+    const char* getSSID(bool choice) {
+        if (choice) {
+            return ssid_sta.c_str();
+        }
         return ssid_ap.c_str();
     }
 
-    const char* getPassword() {
+    const char* getPassword(bool choice) {
+        if (choice) {
+            return password_sta.c_str();
+        }
         return password_ap.c_str();
     }
 
@@ -82,32 +98,61 @@ namespace settings {
         return channel.c_str();
     }
 
+    int getTemperature() {
+        return targetTemp;
+    }
+
+
+
     int getChannelNum() {
         if (strcmp(channel.c_str(), "auto") != 0) return atoi(channel.c_str());
         return 1;
     }
 
     void set(const char* name, const char* value) {
-        if (strcmp(name, "ssid") == 0) {
-            setSSID(value);
-        } else if (strcmp(name, "password") == 0) {
-            setPassword(value);
+        if (strcmp(name, "ssid_ap") == 0) {
+            setSSID(value, false);
+        } else if (strcmp(name, "password_ap") == 0) {
+            setPassword(value, false);
         } else if (strcmp(name, "channel") == 0) {
             setChannel(value);
+        } else if (strcmp(name, "ssid") == 0) {
+            setSSID(value, true);
+        } else if (strcmp(name, "password") == 0) {
+            setPassword(value, true);
+        } else if (strcmp(name, "targetTemp") == 0) {
+            setTemperature(atoi(value));
         }
     }
 
-    void setSSID(const char* ssid) {
+    void setSSID(const char* ssid, bool choice) {
         if (ssid && (strlen(ssid) <= 33)) {
-            ssid_ap = ssid;
-            preferences.putString("SSID_AP", ssid_ap);
+            if(choice) {
+                ssid_sta = ssid;
+                preferences.putString("SSID_STA", ssid_sta);
+            } else {
+                ssid_ap = ssid;
+                preferences.putString("SSID_AP", ssid_ap);
+            }
         }
     }
 
-    void setPassword(const char* password) {
+    void setTemperature(int temperature) {
+        if (temperature && (temperature <= 35)) {
+            targetTemp = temperature;
+            preferences.putInt("Temperature", targetTemp);
+        }
+    }
+
+    void setPassword(const char* password, bool choice) {
         if (password && (strlen(password) >= 8) && (strlen(password) <= 65)) {
-            password_ap = password;
-            preferences.putString("Password_AP", password_ap);
+            if (choice) {
+                password_sta = password;
+                preferences.putString("Password_STA", password_sta);
+            } else {
+                password_ap = password;
+                preferences.putString("Password_AP", password_ap);
+            }
         }
     }
 

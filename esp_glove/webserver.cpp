@@ -80,8 +80,8 @@ namespace webserver {
         WiFi.hostname(HOSTNAME);
 
         // WiFi.mode(WIFI_AP_STA);
-        WiFi.softAP(settings::getSSID(), settings::getPassword(), settings::getChannelNum());
-        debugf("Started Access Point \"%s\":\"%s\"\n", settings::getSSID(), settings::getPassword());
+        WiFi.softAP(settings::getSSID(false), settings::getPassword(false), settings::getChannelNum());
+        debugf("Started Access Point \"%s\":\"%s\"\n", settings::getSSID(false), settings::getPassword(false));
 
         // Webserver
         server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {
