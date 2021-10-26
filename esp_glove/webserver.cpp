@@ -185,4 +185,8 @@ namespace webserver {
     void send(const char* str) {
         if (currentClient) currentClient->text(str);
     }
+
+    void end() {
+        WiFi.softAPdisconnect(true);
+    }
 }

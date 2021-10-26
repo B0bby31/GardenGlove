@@ -28,7 +28,7 @@
 /*! ===== Temperature Settings ===== */
 #define TARGET_TEMP 25
 #define APIKEY 
-#define TEMP1PIN 32
+#define TEMP1PIN 34
 #define TEMP2PIN 35
 
 /*! ===== Transistor Settings ===== */
