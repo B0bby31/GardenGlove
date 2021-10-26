@@ -41,7 +41,7 @@ var slider = document.getElementById("temperatureRange");
 var output = document.getElementById("demo");
 var backgroundColor = '#eb5c34';
 
-slider.value = temperatureSetting;
+/*slider.value = temperatureSetting;*/
 
 output.innerHTML = slider.value; // Display the default slider value
 
@@ -66,7 +66,7 @@ slider.oninput = function() {
         backgroundColor = "#eb3434";
     }
     //send Temperature based on slider input
-    var temperature = slider.value;
+    /*var temperature = slider.value;
     if (temperature) {
       if (temperature >= 15 && temperature <= 35) {
         ws_send("set temperature \"" + temperature + "\"", function(msg) {
@@ -74,7 +74,7 @@ slider.oninput = function() {
       } else {
         alert("ERROR: Invalid temperature");
       }
-    }
+    }*/
     
 }
 
