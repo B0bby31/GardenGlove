@@ -1,16 +1,16 @@
 window.addEventListener("load", function (){
     ws_init();
+    load_settings();
 }, false);
 
 var ssidSetting;
 var passwordSetting;
+var temperatureSetting;
 function submitSettings () {
     var newssid = document.getElementById('ssidInput').value;
     var newpassword = document.getElementById('passwordInput').value;
-    window.location.href = "mainPage.html";
     
-    /*load_settings();
-    if (newssid.length != 0 && newpassword.length != 0) {
+    if (newssid.length = 0 && newpassword.length != 0) {
         window.location.href = "mainPage.html";
     } else {
         if (newssid) {
@@ -32,7 +32,7 @@ function submitSettings () {
             }
         }
         window.location.href = "mainPage.html";
-    }*/
+    }
     
 }
 
@@ -117,7 +117,7 @@ function load_settings() {
         ssidSetting = lines[0].split("=")[1];
         passwordSetting = lines[1].split("=")[1];
         //put it on the slider
-        var temperatureSetting = lines[3].split("=")[1];
+        temperatureSetting = lines[3].split("=")[1];
 
         document.getElementById('ssidInput').value = ssidSetting;
         document.getElementById('passwordInput').value = passwordSetting;
