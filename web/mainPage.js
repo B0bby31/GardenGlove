@@ -7,8 +7,9 @@ var passwordSetting;
 function submitSettings () {
     var newssid = document.getElementById('ssidInput').value;
     var newpassword = document.getElementById('passwordInput').value;
+    window.location.href = "mainPage.html";
     
-    load_settings();
+    /*load_settings();
     if (newssid.length != 0 && newpassword.length != 0) {
         window.location.href = "mainPage.html";
     } else {
@@ -31,7 +32,7 @@ function submitSettings () {
             }
         }
         window.location.href = "mainPage.html";
-    }
+    }*/
     
 }
 
