@@ -4,11 +4,9 @@ function submitSettings () {
     var newssid = document.getElementById('ssidInput').value;
     var newpassword = document.getElementById('passwordInput').value;
 
-
-
-    //load_settings();
+    load_settings();
     if (newssid.length != 0 && newpassword.length != 0) {
-        window.location.href = "mainPage.htm";
+        window.location.href = "mainPage.html";
     } else {
         if (newssid) {
             if (newssid.length >= 1 && newssid.length <= 32) {
@@ -28,7 +26,7 @@ function submitSettings () {
                 alert("ERROR: Invalid length");
             }
         }
-        window.location.href = "mainPage.htm";
+        window.location.href = "mainPage.html";
     }
 }
 
