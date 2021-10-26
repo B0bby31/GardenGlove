@@ -28,11 +28,12 @@
 /*! ===== Temperature Settings ===== */
 #define TARGET_TEMP 25
 #define APIKEY 
-#define TEMP1PIN 
-#define TEMP2PIN
+#define TEMP1PIN 32
+#define TEMP2PIN 35
 
-/*! ===== LED Settings ===== */
-
+/*! ===== Transistor Settings ===== */
+#define MOS1PIN 25
+#define MOS2PIN 27
 
 /*! ===== Button Settings ===== */
 #define BUTTON1PIN 18
