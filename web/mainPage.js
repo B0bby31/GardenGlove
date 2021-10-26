@@ -40,7 +40,7 @@ var slider = document.getElementById("temperatureRange");
 var output = document.getElementById("demo");
 var backgroundColor = '#eb5c34';
 
-/*slider.value = temperatureSetting;*/
+slider.value = temperatureSetting;
 
 output.innerHTML = slider.value; // Display the default slider value
 
@@ -65,7 +65,6 @@ slider.oninput = function() {
         backgroundColor = "#eb3434";
     }
     //send Temperature based on slider input
-    /*
     var temperature = slider.value;
     if (temperature) {
       if (temperature >= 15 && temperature <= 35) {
@@ -75,7 +74,7 @@ slider.oninput = function() {
         alert("ERROR: Invalid temperature");
       }
     }
-    */
+    
 }
 
 var el_down = document.getElementById("modeChangerHeading");
@@ -102,7 +101,7 @@ function manualRun() {
     document.getElementById("slideTemperature").style.display = "none";
 }         
 
-/*document.getElementById("reset").onclick = function() {
+document.getElementById("reset").onclick = function() {
     if (confirm("Reset all settings to default?")) {
       ws_send("reset", function(msg) {
         load_settings();
@@ -124,4 +123,3 @@ function load_settings() {
         document.getElementById("temperatureRange").value = temperatureSetting;
     });
 }
-*/
