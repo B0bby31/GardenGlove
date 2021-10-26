@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel= "stylesheet" href= "mainPage.css">
+</head>
+<body>
+
+<div id="mainInterface">
+    <h1>Smart Glove</h1>
+
+    <p id = "modeChangerHeading" style = "font-size: 16px; font-weight: bold;"> </p>
+
+    <div class="buttons2">
+        <button id = "manualButton" onclick = "manualRun()"> Manual Mode </button>
+        <button id = "autoButton" onclick = "autoRun()"> Autonomous Mode </button>
+    </div>
+
+    <div id= "selectTemperature" >
+        <label for="select1">Temperature:</label>
+        <select name="select1" onchange="document.body.style.backgroundColor = this.value">
+            <option value="#b4eb34">Cold</option>
+            <option value="#eb9f34">Warm</option>
+            <option value="#eb5c34">Warmer</option>
+            <option value="#eb3434">Very Warm</option>
+        </select>
+    </div>
+
+    <div id="slideTemperature">
+        <br>
+        <br>
+        <br>
+        <div class="slideContainer">
+            <input type="range" min="15" max="25" value="50" class="slider" id="temperatureRange">
+        </div>
+        Temperature: <span id="demo">48</span>
+    </div>
+
+    <div id = "loading" class="loading loading--full-height"></div>
+</div>
+
+<button id="reset" onclick="window.location.href='index.htm'">Reset</button>
+
+<script type="text/javascript" src="mainPage.js"></script>   
+</body>
+</html>
