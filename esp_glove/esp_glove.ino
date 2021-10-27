@@ -36,7 +36,7 @@ void setup() {
     pinMode(MOS2PIN, OUTPUT);
     attachInterrupt(BUTTON1PIN, press1, RISING);
     attachInterrupt(BUTTON2PIN, press2, RISING);
-    settings::begin(true);
+    settings::begin(false);
     cli::begin();
 
 

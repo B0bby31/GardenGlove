@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <link rel= "stylesheet" href= "mainPage.css">
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="mainPage.js"></script>   
 </head>
 <body>
-
+<div id="status"></div>
 <div id="mainInterface">
     <h1>Smart Glove</h1>
 
@@ -29,7 +31,7 @@
         <br>
         <br>
         <br>
-        <div class="slideContainer">
+        <div id="slider" class="slideContainer">
             <input type="range" min="15" max="25" value="50" class="slider" id="temperatureRange">
         </div>
         Temperature: <span id="demo">48</span>
@@ -38,11 +40,14 @@
     <div id = "loading" class="loading loading--full-height"></div>
 </div>
 
-<button id="reset" onclick="window.location.href='index.html'">Reset</button>
+<button id="reset">Reset</button>
 
-<script type="text/javascript" src="script.js"></script>
-<script type="text/javascript" src="mainPage.js"></script>   
 
 
 </body>
+<footer>
+    <a href="https://github.com/Userb31/GardenGlove" target="_blank">Source</a>
+    <br><br>
+    <span id="version"></span><br>
+</footer>
 </html>

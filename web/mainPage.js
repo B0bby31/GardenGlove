@@ -1,53 +1,53 @@
 window.addEventListener("load", function (){
+    E("reset").onclick = function() {
+        if (confirm("Reset all settings to default?")) {
+          ws_send("reset", function(msg) {
+            load_settings();
+          });
+          window.location.href="index.html";
+        }
+    }
+    E("modeChangerHeading").innerHTML = "Click on button to change the mode";
     ws_init();
-    load_settings();
 }, false);
 
-var ssidSetting;
-var passwordSetting;
-var temperatureSetting;
-function submitSettings () {
-    var newssid = document.getElementById('ssidInput').value;
-    var newpassword = document.getElementById('passwordInput').value;
-    
-    if (newssid.length = 0 && newpassword.length != 0) {
-        window.location.href = "mainPage.html";
-    } else {
-        if (newssid) {
-            if (newssid.length >= 1 && newssid.length <= 32) {
-                ws_send("set ssid \"" + newssid + "\"", function(msg) {
-                    load_settings();
-                });
-            } else {
-                alert("ERROR: Invalid length");
-            }
-        }
-        if (newpassword) {
-            if (newpassword.length >= 8 && newpassword.length <= 64) {
-                ws_send("set password \"" + newpassword + "\"", function(msg) {
-                    load_settings();
-                });
-            } else {
-                alert("ERROR: Invalid length");
-            }
-        }
-        window.location.href = "mainPage.html";
-    }
-    
+function ws_connected() {
+    return;
 }
 
 //put current temperature value into slider on page load
-var slider = document.getElementById("temperatureRange");
-var output = document.getElementById("demo");
 var backgroundColor = '#eb5c34';
 
 /*slider.value = temperatureSetting;*/
 
-output.innerHTML = slider.value; // Display the default slider value
 
-// Update the current slider value (each time you drag the slider handle) and set background color
-slider.oninput = function() {
-    output.innerHTML = this.value;
+function load_settings() {
+    ws_send("settings", function(msg) {
+        var lines = msg.split(/\n/);
+  
+        var temperature = lines[3].split("=")[1];
+  
+        if (temperature == null);
+        else {
+            E("temperatureRange").value = temperature;
+            E("demo").innerHTML = temperature;
+        }
+    });
+  }
+
+function changeColor(color) {
+    document.body.style.background = color;
+}
+
+function autoRun() {
+    changeColor(backgroundColor);
+    E("modeChangerHeading").innerHTML = "Autonomous mode has been selected";
+    document.getElementById("selectTemperature").style.display = "none";
+    document.getElementById("slideTemperature").style.display = "block";
+    document.getElementById("loading").style.display = "flex";
+    // Update the current slider value (each time you drag the slider handle) and set background color
+    E("slider").oninput = function() {
+    E("demo").innerHTML = E("temperatureRange").value;
     document.getElementById("loading").style.display = "flex";
     if(this.value >= 15 && this.value < 18){
         changeColor("#b4eb34");
@@ -66,61 +66,26 @@ slider.oninput = function() {
         backgroundColor = "#eb3434";
     }
     //send Temperature based on slider input
-    /*var temperature = slider.value;
+    var temperature = E("temperatureRange").value;
     if (temperature) {
       if (temperature >= 15 && temperature <= 35) {
-        ws_send("set temperature \"" + temperature + "\"", function(msg) {
+        ws_send("set targetTemp \"" + temperature + "\"", function(msg) {
         });
       } else {
         alert("ERROR: Invalid temperature");
       }
-    }*/
+    }
     
-}
-
-var el_down = document.getElementById("modeChangerHeading");
-var str = "Click on button to change the mode";
-el_up.innerHTML = str;
-
-function changeColor(color) {
-    document.body.style.background = color;
-}
-
-function autoRun() {
-    changeColor(backgroundColor);
-    el_down.innerHTML = "Autonomous mode has been selected";
-    document.getElementById("selectTemperature").style.display = "none";
-    document.getElementById("slideTemperature").style.display = "block";
-    document.getElementById("loading").style.display = "flex";
+    }
+    load_settings();
 }         
 
 function manualRun() {
     changeColor('#b4eb34');
-    el_down.innerHTML = "Manual mode has been selected";
+    E("modeChangerHeading").innerHTML = "Manual mode has been selected";
     document.getElementById("selectTemperature").style.display = "block";
     document.getElementById("loading").style.display = "none";
     document.getElementById("slideTemperature").style.display = "none";
 }         
 
-document.getElementById("reset").onclick = function() {
-    if (confirm("Reset all settings to default?")) {
-      ws_send("reset", function(msg) {
-        load_settings();
-      });
-    }
-};
 
-function load_settings() {
-    ws_send("settings", function(msg) {
-        var lines = msg.split(/\n/);
-
-        ssidSetting = lines[0].split("=")[1];
-        passwordSetting = lines[1].split("=")[1];
-        //put it on the slider
-        temperatureSetting = lines[3].split("=")[1];
-
-        document.getElementById('ssidInput').value = ssidSetting;
-        document.getElementById('passwordInput').value = passwordSetting;
-        document.getElementById("temperatureRange").value = temperatureSetting;
-    });
-}

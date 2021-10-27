@@ -3,6 +3,8 @@
    Source: https://github.com/spacehuhntech/WiFiDuck
  */
 
+
+
 // ===== Helper Functions ===== //
 function log(msg) {
   console.log(msg);
@@ -10,30 +12,6 @@ function log(msg) {
 
 function E(id) {
   return document.getElementById(id);
-}
-
-function download_txt(fileName, fileContent) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileContent));
-  element.setAttribute('download', fileName);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
-
-  document.body.removeChild(element);
-}
-
-function fixFileName(fileName) {
-  if (fileName.length > 0) {
-    if (fileName[0] != '/') {
-      fileName = '/' + fileName;
-    }
-
-    fileName = fileName.replace(/ /g, '\-');
-  }
-  return fileName;
 }
 
 // ===== DOM Manipulation ===== //
@@ -120,7 +98,6 @@ function ws_init() {
     log_ws("connected");
     status("connected");
 
-    ws_send("close", log_ws, true);
     ws_send("version", set_version);
 
     ws_connected();

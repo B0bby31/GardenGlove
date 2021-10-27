@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <link rel= "stylesheet" href= "mainPage.css">
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="index.js"></script>          
 </head>
 <body>
-
+<div id="status"></div>
 <div id="configurationInterface">
     <h1>Configure Your Gloves</h1>
 
@@ -14,12 +16,14 @@
         <label for="passwordInput">Password:</label><br>
         <input type="password" id="passwordInput" name="passwordInput" required><br><br>
     </form> 
-    <button id="submit" onclick="submitSettings()">Submit</button>
+    <button id="submit">Submit</button>
       
-</div>
-
-<script type="text/javascript" src="script.js"></script>
-<script type="text/javascript" src="mainPage.js"></script>   
+</div> 
 
 </body>
+<footer>
+    <a href="https://github.com/Userb31/GardenGlove" target="_blank">Source</a>
+    <br><br>
+    <span id="version"></span><br>
+</footer>
 </html>

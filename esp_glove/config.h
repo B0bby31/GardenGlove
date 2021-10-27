@@ -8,7 +8,7 @@
 #define VERSION "0.1"
 
 /*! ===== DEBUG Settings ===== */
-#define ENABLE_DEBUG
+#define ENABLE_DEBUG 1
 #define DEBUG_LED 2
 #define DEBUG_PORT Serial
 #define DEBUG_BAUD 115200

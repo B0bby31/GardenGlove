@@ -28,6 +28,7 @@ namespace settings {
     }
 
     void load() {
+      debugln("loading");
       ssid_ap = preferences.getString("SSID_AP", WIFI_SSID); 
       password_ap = preferences.getString("Password_AP", WIFI_PASSWORD);
       ssid_sta = preferences.getString("SSID_STA", NETWORK_SSID); 
@@ -46,7 +47,7 @@ namespace settings {
         setSSID(WIFI_SSID, false);
         setPassword(WIFI_PASSWORD, false);
         setSSID(NETWORK_SSID, true);
-        setPassword(NETWORK_PASSWORD, true);        
+        preferences.putString("Password_STA", NETWORK_PASSWORD);        
         setChannel(WIFI_CHANNEL);
         setTemperature(TARGET_TEMP);
     }
@@ -110,6 +111,7 @@ namespace settings {
     }
 
     void set(const char* name, const char* value) {
+        debugln("test");
         if (strcmp(name, "ssid_ap") == 0) {
             setSSID(value, false);
         } else if (strcmp(name, "password_ap") == 0) {
@@ -118,6 +120,7 @@ namespace settings {
             setChannel(value);
         } else if (strcmp(name, "ssid") == 0) {
             setSSID(value, true);
+            debugln("worked");
         } else if (strcmp(name, "password") == 0) {
             setPassword(value, true);
         } else if (strcmp(name, "targetTemp") == 0) {
