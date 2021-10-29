@@ -133,9 +133,6 @@ body {
     position: relative;
     bottom: 0;
 }
-#test {
-    display: none;
-}
 
 .slider {
     -webkit-appearance: none;

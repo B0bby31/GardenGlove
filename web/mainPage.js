@@ -15,6 +15,7 @@ function ws_connected() {
     return;
 }
 
+
 function load_settings() {
     ws_send("settings", function(msg) {
         var lines = msg.split(/\n/);
@@ -64,15 +65,17 @@ function autoRun() {
         alert("ERROR: Invalid temperature");
       }
     }
-    
+    ws_send("test", function(msg) {});
     }
     load_settings();
-}         
+}  
+
 
 function manualRun() {
     changeColor('#b4eb34');
     E("modeChangerHeading").innerHTML = "Manual mode has been selected";
     document.getElementById("selectTemperature").style.display = "block";
+    ws_send("stop", function(msg) {});
     document.getElementById("slideTemperature").style.display = "none";
 }         
 
