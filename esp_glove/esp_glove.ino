@@ -17,6 +17,10 @@
 bool event1 = false;
 bool event2 = false;
 bool autoM = true;
+unsigned long startCycle;
+int currentDC;
+int currentStep = 10;
+unsigned long endCycle;
 bool first = true; // is it the first mode switch
 
 void IRAM_ATTR press1() {
@@ -55,12 +59,37 @@ void setup() {
 }
 
 void automatic(unsigned long timeOne) {
-  if(!first) transistor::setDutyCycle(50);
+  if(!first) {
+    currentDC = 50;
+    transistor::setDutyCycle(50);
+  }
   first = true;
+  if(autoM) {
+    startCycle = millis();
+    autoM = false;
+  }
+  endCycle = millis();
+  if (endCycle - startCycle >= 4000) {
+    autoM = true;
+    if (settings::getTemperature() > sensor::readingSensorTwo()) {
+      transistor::increaseDutyCycle(currentStep);
+    } else if (settings::getTemperature() < sensor::readingSensorTwo()) {
+      transistor::decreaseDutyCycle(currentStep);
+    } 
+    if ((settings::getTemperature() - sensor::readingSensorTwo()) > 4 || (settings::getTemperature() - sensor::readingSensorTwo()) < -4 );
+    else currentStep = currentStep / 2;
+  } else {
+      unsigned long CurrentTime = millis();
+      transistor::cycle(CurrentTime - timeOne);
+  }
 }
 
 void manual(unsigned long timeOne) {
-  if(first) transistor::setDutyCycle(0);
+  if(first) {
+      transistor::setDutyCycle(0);
+      autoM = true;
+      currentStep = 10;
+  }
   first = false;
   if (event1) {
     debugln(sensor::readingSensorOne());
