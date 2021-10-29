@@ -38,11 +38,9 @@ function autoRun() {
     E("modeChangerHeading").innerHTML = "Autonomous mode has been selected";
     document.getElementById("selectTemperature").style.display = "none";
     document.getElementById("slideTemperature").style.display = "block";
-    document.getElementById("loading").style.display = "flex";
     // Update the current slider value (each time you drag the slider handle) and set background color
     E("slider").oninput = function() {
     E("demo").innerHTML = E("temperatureRange").value;
-    document.getElementById("loading").style.display = "flex";
     if(E("temperatureRange").value >= 15 && E("temperatureRange").value < 18){
         changeColor("#b4eb34");
     }
@@ -75,7 +73,6 @@ function manualRun() {
     changeColor('#b4eb34');
     E("modeChangerHeading").innerHTML = "Manual mode has been selected";
     document.getElementById("selectTemperature").style.display = "block";
-    document.getElementById("loading").style.display = "none";
     document.getElementById("slideTemperature").style.display = "none";
 }         
 
