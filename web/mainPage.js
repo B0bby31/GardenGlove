@@ -15,12 +15,6 @@ function ws_connected() {
     return;
 }
 
-//put current temperature value into slider on page load
-var backgroundColor = '#eb5c34';
-
-/*slider.value = temperatureSetting;*/
-
-
 function load_settings() {
     ws_send("settings", function(msg) {
         var lines = msg.split(/\n/);
@@ -40,7 +34,7 @@ function changeColor(color) {
 }
 
 function autoRun() {
-    changeColor(backgroundColor);
+    changeColor('#eb5c34');
     E("modeChangerHeading").innerHTML = "Autonomous mode has been selected";
     document.getElementById("selectTemperature").style.display = "none";
     document.getElementById("slideTemperature").style.display = "block";
@@ -49,21 +43,18 @@ function autoRun() {
     E("slider").oninput = function() {
     E("demo").innerHTML = E("temperatureRange").value;
     document.getElementById("loading").style.display = "flex";
-    if(this.value >= 15 && this.value < 18){
+    if(E("temperatureRange").value >= 15 && E("temperatureRange").value < 18){
         changeColor("#b4eb34");
-        backgroundColor = "#b4eb34";
     }
-    if(this.value >= 18 && this.value < 20){
+    if(E("temperatureRange").value >= 18 && E("temperatureRange").value < 20){
         changeColor("#eb9f34");
-        backgroundColor = "#eb9f34";
     }
-    if(this.value >= 20 && this.value < 23){
+    if(E("temperatureRange").value >= 20 && E("temperatureRange").value < 23){
         changeColor("#eb5c34");
         backgroundColor = "#eb5c34";
     }
-    if(this.value >= 23 && this.value <= 25){
+    if(E("temperatureRange").value >= 23 && E("temperatureRange").value <= 25){
         changeColor("#eb3434");
-        backgroundColor = "#eb3434";
     }
     //send Temperature based on slider input
     var temperature = E("temperatureRange").value;

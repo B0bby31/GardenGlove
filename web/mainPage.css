@@ -2,6 +2,69 @@ body {
     background: radial-gradient(circle at center, #e66465, #9198e5);
     text-align: center;
 }
+#header1 {
+    margin: 1em 0 0.5em 0;
+	color: black;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;   
+	font-size: 36px;
+	line-height: 42px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;
+}
+#modeChangerHeading {
+    margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-weight: normal;
+	font-size: 25px;
+	line-height: 27px;
+	font-family: 'Orienta', sans-serif;
+}
+#manualButton {
+    display:inline-block;
+    padding:0.5em 3em;
+    border:0.16em solid #f56042;
+    margin:0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:'Roboto',sans-serif;
+    font-weight:400;
+    color:#343434;
+    text-align:center;
+    transition: all 0.15s;
+}
+#autoButton {
+    display:inline-block;
+    padding:0.5em 3em;
+    border:0.16em solid cyan;
+    margin:0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:'Roboto',sans-serif;
+    font-weight:400;
+    color:#343434;
+    text-align:center;
+    transition: all 0.15s;
+}
+#manualButton:hover {
+    color:#DDDDDD;
+    border-color:#DDDDDD;
+}
+#autoButton:hover {
+    color:#DDDDDD;
+    border-color:#DDDDDD;
+}
+#manualButton:active {
+    color:#BBBBBB;
+    border-color:#BBBBBB;
+}
+#autoButton:active {
+    color:#BBBBBB;
+    border-color:#BBBBBB;
+}
+
 #selectTemperature {
     display : none;
 }
@@ -47,4 +110,11 @@ body {
     border-radius: 50%;
     background: #04AA6D;
     cursor: pointer;
+}
+
+
+.buttons1 {
+    display :flex;
+    justify-content: space-around;
+    flex-direction: row;
 }
