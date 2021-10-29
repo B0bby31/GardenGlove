@@ -11,10 +11,12 @@
 #include "cli.h"
 #include "transistor.h"
 #include "sensor.h"
+#include "battery.h"
+#include "test.h"
 
 bool event1 = false;
 bool event2 = false;
-bool mode1 = false; // what mode is the esp currently in
+bool autoM = true;
 bool first = true; // is it the first mode switch
 
 void IRAM_ATTR press1() {
@@ -34,28 +36,32 @@ void setup() {
     pinMode(DEBUG_LED, OUTPUT);
     pinMode(MOS1PIN, OUTPUT);
     pinMode(MOS2PIN, OUTPUT);
+    pinMode(GREEN, OUTPUT);
+    pinMode(BLUE, OUTPUT);
+    pinMode(RED, OUTPUT);
     attachInterrupt(BUTTON1PIN, press1, RISING);
     attachInterrupt(BUTTON2PIN, press2, RISING);
+    digitalWrite(GREEN, HIGH); // For Anton
+    delay(2000);
+    digitalWrite(GREEN, LOW);
     settings::begin(false);
     cli::begin();
+    webserver::begin();
 
 
     debug("\n[~~~ Glove v");
     debug(VERSION);
     debugln(" Started! ~~~]");
-
 }
 
-void automatic() {
-  if (!first) webserver::end();
+void automatic(unsigned long timeOne) {
+  if(!first) transistor::setDutyCycle(50);
   first = true;
 }
 
-void manual() {
-  if (first) webserver::begin();
+void manual(unsigned long timeOne) {
+  if(first) transistor::setDutyCycle(0);
   first = false;
-  unsigned long StartTime = millis();
-  webserver::update();
   if (event1) {
     debugln(sensor::readingSensorOne());
     transistor::increaseDutyCycle(10);
@@ -69,15 +75,17 @@ void manual() {
     event2 = false;     
   }
   unsigned long CurrentTime = millis();
-  transistor::cycle(CurrentTime - StartTime);
+  transistor::cycle(CurrentTime - timeOne);
 }
 
 
 void loop() {
-  if (mode1) {
-    automatic();
-  } else {
-    manual();
-  }
+  unsigned long StartTime = millis();
   debug_update();
+  webserver::update();
+  if (test::getMode()) {
+    automatic(StartTime);
+  } else {
+    manual(StartTime);
+  }
 }

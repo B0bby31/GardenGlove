@@ -10,9 +10,10 @@
 namespace transistor {
     double dc = 0;
     double cycletime = 500;
+    bool turn = false;
 
     void setDutyCycle(int percent) {
-        if (0 <= percent && percent <= 90) dc = percent;
+        if (percent >= 0 && percent <= 90) dc = percent;
     }
 
     int getDutyCycle() {
@@ -30,11 +31,16 @@ namespace transistor {
     void cycle(unsigned long time) {
         double wait = cycletime * (1 - dc/100) - time;
         delay(max(floor(wait),(double) 0));
-        digitalWrite(MOS1PIN, HIGH);
-        digitalWrite(MOS2PIN, HIGH);
+        if (turn) digitalWrite(MOS1PIN, HIGH);
+        else digitalWrite(MOS2PIN, HIGH);
+        digitalWrite(BLUE, HIGH);
+        digitalWrite(RED, HIGH);
         delay(ceil(cycletime * (dc / 100)));
-        digitalWrite(MOS1PIN, LOW);
-        digitalWrite(MOS2PIN, LOW);
+        if (turn) digitalWrite(MOS1PIN, LOW);
+        else digitalWrite(MOS2PIN, LOW);
+        digitalWrite(BLUE, LOW);
+        digitalWrite(RED, LOW);
+        turn = !turn;
     }
 
 }

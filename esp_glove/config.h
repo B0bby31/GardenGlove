@@ -5,7 +5,7 @@
 
 #pragma once
 
-#define VERSION "0.1"
+#define VERSION "1.1"
 
 /*! ===== DEBUG Settings ===== */
 #define ENABLE_DEBUG 1
@@ -28,7 +28,7 @@
 /*! ===== Temperature Settings ===== */
 #define TARGET_TEMP 25
 #define APIKEY 
-#define TEMP1PIN 34
+#define TEMP1PIN 32
 #define TEMP2PIN 35
 
 /*! ===== Transistor Settings ===== */
@@ -36,14 +36,20 @@
 #define MOS2PIN 27
 
 /*! ===== Button Settings ===== */
-#define BUTTON1PIN 18
-#define BUTTON2PIN 23
+#define BUTTON1PIN 23
+#define BUTTON2PIN 18
 
 /*! ===== Battery Settings ===== */
 #define CELLONE 34
 #define CELLTWO 33
-#define MINVOLTAGE 2.7
-#define MAXVOLTAGE 3.65
+#define MINVOLTAGE 5.5
+#define MAXVOLTAGE 6.6
+
+
+/*! ===== LED Settings ===== */
+#define BLUE 12
+#define RED 4
+#define GREEN 15
 
 #if !defined(ESP32)
 #error You are compiling for the wrong board, mate! Select something with an ESP32.

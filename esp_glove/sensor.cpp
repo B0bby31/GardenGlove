@@ -7,29 +7,30 @@
 
 
 namespace sensor {
-    double currentReadingOne = analogReadMilliVolts(TEMP1PIN) / 10;
-    double currentReadingTwo = analogReadMilliVolts(TEMP2PIN)/ 10;
+    double currentReadingOne;
+    double currentReadingTwo;
     double readingSensorOne() {
-        double average = 0;
-        average += analogReadMilliVolts(TEMP1PIN)/ 10;
-        delay(1);
-        average += analogReadMilliVolts(TEMP1PIN)/ 10;
-        delay(1);
-        average += analogReadMilliVolts(TEMP1PIN)/ 10;
-        delay(1);
-        currentReadingOne = average / 3;
+        double voltage = analogReadMilliVolts(TEMP1PIN);
+        currentReadingOne = voltage / 10;
         return round(currentReadingOne);
     }
 
+    String toStringOne() {
+      String s;
+
+      s += "Sensor1=";
+      s += currentReadingOne;
+      s += "\n";
+      s += "Sensor2=";
+      s += currentReadingTwo;
+      s += "\n";
+
+      return s;
+    }
+
     double readingSensorTwo() {
-        double average = 0;
-        average += analogReadMilliVolts(TEMP2PIN)/ 10;
-        delay(1);
-        average += analogReadMilliVolts(TEMP2PIN)/ 10;
-        delay(1);
-        average += analogReadMilliVolts(TEMP2PIN)/ 10;
-        delay(1);
-        currentReadingTwo = average / 3 - currentReadingOne;
+        double voltage = analogReadMilliVolts(TEMP2PIN);
+        currentReadingTwo = voltage / 10;
         return round(currentReadingTwo);
     }
 }

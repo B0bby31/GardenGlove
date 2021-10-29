@@ -13,6 +13,9 @@
 // Import modules used for different commands
 #include "settings.h"
 #include "config.h"
+#include "sensor.h"
+#include "battery.h"
+#include "test.h"
 
 namespace cli {
     // ===== PRIVATE ===== //
@@ -63,6 +66,35 @@ namespace cli {
          */
         cli.addCommand("help", [](cmd* c) {
             print(cli.toString());
+        });
+
+        cli.addCommand("test", [](cmd* c) {
+            test::setMode(true);
+        });
+
+        cli.addCommand("stop", [](cmd* c) {
+            test::setMode(false);
+        });
+
+        
+        /**
+         * \brief Create temperature Command
+         *
+         * Prints all available commands with their arguments
+         */
+        cli.addCommand("temperature", [](cmd* c) {
+            sensor::readingSensorOne();
+            sensor::readingSensorTwo();
+            print(sensor::toStringOne());
+        });
+
+        /**
+         * \brief Create battery Command
+         *
+         * Prints all available commands with their arguments
+         */
+        cli.addCommand("battery", [](cmd* c) {
+            print(battery::toStringOne());
         });
 
         /**

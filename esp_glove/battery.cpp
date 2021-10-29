@@ -30,7 +30,7 @@ namespace battery {
         delay(1);
         average += (analogReadMilliVolts(CELLTWO) * 3.2) / 1000;
         delay(1);
-        currentReadingTwo = average / 3 - currentReadingOne;
+        currentReadingTwo = average / 3;
         return currentReadingTwo;
     }
 
@@ -40,6 +40,18 @@ namespace battery {
     }
     int percentageCellTwo() {
         double percent = ((readingCellTwo() - MINVOLTAGE) / (MAXVOLTAGE - MINVOLTAGE)) * 100;
-        return floor(percent);
+        return min(floor(percent),(double) 100);
+    }
+    String toStringOne() {
+      String s;
+
+      s += "Cell1=";
+      s += percentageCellOne();
+      s += "\n";
+      s += "Cell2=";
+      s += percentageCellTwo();
+      s += "\n";
+
+      return s;
     }
 }

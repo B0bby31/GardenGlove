@@ -9,6 +9,7 @@
 #include "debug.h"
 #include "config.h"
 #include "battery.h"
+#include "sensor.h"
 
 Preferences preferences;
 

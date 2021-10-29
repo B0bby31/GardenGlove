@@ -8,4 +8,6 @@ namespace battery {
 
     int percentageCellOne();
     int percentageCellTwo();
+
+    String toStringOne();
 }
